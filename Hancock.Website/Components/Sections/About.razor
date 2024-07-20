@@ -1,0 +1,38 @@
+﻿<Section Name="About">
+    <h1 class="mb-0">
+        @FirstName
+        <span class="text-primary">@LastName</span>
+    </h1>
+    <div class="subheading mb-5">
+        @Location
+        <span>·</span>
+        <a class="email" href="mailto:hello@ahancock.co.uk">
+            @Email
+        </a>
+    </div>
+
+    <p class="lead mb-3">
+        I'm a seasoned full-stack .NET software engineer with a passion for building innovative, maintainable, and scalable software solutions. With extensive experience in agile environments, I specialize in reactive event-driven programming, robust API development, and optimizing high throughput systems. My expertise spans event-driven and microservice architectures, real-time software development, and maintaining CI/CD pipelines to ensure smooth and efficient workflows.
+    </p>
+
+    <p class="lead mb-5">
+        I thrive on solving complex technical challenges and am dedicated to delivering top-quality results. Whether you're looking to develop a new application, optimize an existing system, or need a reliable engineer to bring your vision to life, I'm here to help. Let's work together to create something extraordinary!
+    </p>
+
+    <SocialLinks>
+        <SocialLink Link="@("https://www.linkedin.com/in/dev-hancock")" Icon="fa-linkedin"></SocialLink>
+        <SocialLink Link="@("https://github.com/dev-hancock")" Icon="fa-github"></SocialLink>
+        <SocialLink Link="@("https://medium.com/@dev-hancock")" Icon="fa-medium"></SocialLink>
+    </SocialLinks>
+
+</Section>
+
+@code {
+    string FirstName = "Adam";
+
+    string LastName = "Hancock";
+
+    string Location = "Bristol, UK";
+
+    string Email = "hello@ahancock.co.uk";
+}

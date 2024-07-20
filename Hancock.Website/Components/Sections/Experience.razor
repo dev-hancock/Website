@@ -1,0 +1,114 @@
+﻿@using Hancock.Website.Components.Timeline;
+
+<Section Name="Experience">
+    <h2 class="mb-5">Experience</h2>
+
+    <Timeline>
+        @for (var i = 0; i < Items.Count; i++)
+        {
+            var item = Items[i];
+            var position = i % 2 == 0 ? TimelinePosition.Left : TimelinePosition.Right;
+
+            <TimelineItem Title="@item.Title"
+                          Date="@item.Date"
+                          Company="@item.Company"
+                          Position="@position">
+                @if (item.Duties != null)
+                {
+                    <ul>
+                        @foreach (var duty in item.Duties)
+                        {
+                            <li class="my-3">
+                                @duty
+                            </li>
+                        }
+                    </ul>
+                }
+            </TimelineItem>
+        }
+    </Timeline>
+
+</Section>
+
+@code {
+
+    record Model(string Title, string Date, string Company, string[] Duties, string[] Skills);
+
+    IList<Model> Items = new List<Model>()
+    {
+        new Model
+        (
+            Date: "Nov 2022",
+            Company: "Advanced Instruments",
+            Title: "Senior Software Engineer",
+            Duties: new[]
+            {
+                "Led the development and delivery of a REST API for a third-party application, achieving deployment in San Francisco within 5 weeks.",
+                "Authored high and low-level design documents for system and application architecture.",
+                "Led meetings and retrospectives, stepping in for the development manager as needed.",
+                "Developed a Blazor WebAssembly application with SignalR for CQRS-based event messaging.",
+                "Worked with a remote team of engineers and managers on system development and maintenance.",
+                "Collaborated in planning for codebase maintenance and future enhancements.",
+                "Created and maintained YAML build pipelines."
+            },
+            Skills: new string[] {}
+        ),
+        new Model
+        (
+            Date: "Jun 2018",
+            Company: "Optimal Industrial Technologies",
+            Title: "Software Engineer",
+            Duties: new []
+            {
+                "Reviewed the product team's code for quality and best practices, providing detailed feedback on implementation.",
+                "Collaborated with product stakeholders to understand business needs, delivering tailored solutions.",
+                "Managed and led a team of two developers, coordinating with project managers to meet milestones and deadlines on a £700k client project.",
+                "Developed and maintained an MSSQL database, ensuring redundancy, and implemented efficient SQL queries and stored procedures.",
+                "Played a pivotal role in the core product team, focusing on the development and implementation of modular web service architecture designs and patterns.",
+            },
+            Skills: new string[] {}
+        ),
+        new Model
+        (
+            Date: "Sept 2016",
+            Company: "Solentim",
+            Title: "Software Engineer",
+            Duties: new[]
+            {
+                "Implemented parallel image processing and deconvolution algorithms, optimizing for graphics hardware.",
+                "Spearheaded the transition from file-based storage to an SQLite database using EF Core.",
+                "Enhanced TIF format image viewing capabilities by integrating HLSL within WPF.",
+                "Successfully refactored multiple projects to a modular architecture, segregating business logic.",
+                "Collaborated closely with the lead developer to design a UI that significantly improved the user experience across the application."
+            },
+            Skills: new string[] {}
+        ),
+        new Model
+        (
+            Date: "Jun 20215",
+            Company: "ionoco Tech",
+            Title: "Software Engineer",
+            Duties: new[]
+            {
+                "Collaborated with clients to design and deliver custom gameshow television software.",
+                "Seamlessly integrated hardware using diverse communication protocols.",
+                "Maintained strict oversight of project scope and requirements, ensuring timely achievement of recording deadlines for clients."
+            },
+            Skills: new string[] {}
+        ),
+        new Model
+        (
+            Date: "Dec 2013",
+            Company: "MOOV LIMITED",
+            Title: "Software Engineer",
+            Duties: new[]
+            {
+                "Established an MSSQL server with redundancy to store real-time live data sourced externally.",
+                "Leveraged the Twitter API to develop an interactive, real-time voting application for live broadcasting.",
+                "Engaged proactively with the CEO in an Agile setting to ensure prompt achievement of project milestones.",
+                "Spearheaded the design, development, and maintenance of over five distinct applications.",
+            },
+            Skills: new string[] {}
+        ),
+    };
+}

@@ -1,0 +1,13 @@
+﻿:root {
+    --txt-header-color: #333;
+    --nav-height: 80px;
+    --nav-width: 270px;
+
+    --txt-color: white;
+
+    --txt-color-lgt: white;
+    --txt-color-drk: #333;
+
+    --accent-lgt: #1773E9;
+    --accent-drk: #66E3CE;
+}

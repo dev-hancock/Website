@@ -1,0 +1,11 @@
+﻿<a class="nav-item" href="@Link">
+    @Name
+</a>
+
+@code {
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public string Link { get; set; }
+}

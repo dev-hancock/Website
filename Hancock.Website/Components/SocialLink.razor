@@ -1,0 +1,13 @@
+﻿<div class="social-icon">
+    <a href="@Link" target="_blank">
+        <i class="fa @Icon" style="font-size:1.5rem"></i>
+    </a>
+</div>
+
+@code {
+    [Parameter]
+    public string Link { get; set; }
+
+    [Parameter]
+    public string Icon { get; set; }
+}

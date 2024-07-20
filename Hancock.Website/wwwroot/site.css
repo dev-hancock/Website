@@ -1,0 +1,39 @@
+﻿@import url('fonts.css');
+
+@import url('variables.css');
+@import url('styles.css');
+
+@import url('timeline.css');
+@import url('sections.css');
+@import url('socials.css');
+
+body {
+    margin: 0;
+    color: #6c757d;
+}
+
+a {
+    cursor: pointer;
+}
+
+main {
+    padding: 0 20px;
+    padding-top: var(--nav-height);
+}
+
+@media (min-width: 992px) {
+    body {
+        padding-top: 0;
+    }
+
+    main {
+        padding-top: 0;
+        padding-left: var(--nav-width);
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    outline: none;
+    color: var(--txt-header-color);
+    letter-spacing: 0rem;
+}

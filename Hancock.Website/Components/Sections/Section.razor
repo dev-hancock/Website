@@ -1,0 +1,13 @@
+﻿<section class="resume-section" id="@Name"> 
+    <div class="resume-section-content">
+        @ChildContent
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public required string Name { get; set; }
+
+    [Parameter]
+    public required RenderFragment ChildContent { get; set; }
+}

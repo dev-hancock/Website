@@ -1,0 +1,135 @@
+﻿@using Hancock.Website.Components.Timeline;
+
+<Section Name="Education">
+    <h2 class="mb-5">Education</h2>
+
+    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+        <div class="flex-grow-1">
+            <h3 class="mb-0">University of Plymouth</h3>
+            <div class="subheading mb-3">(BSc) Computer Science</div>
+            <div>
+                @if (CurrentItem != null)
+                {
+                    <div class="slide-container">
+@*                         <button class="slide-button" @onclick="OnPrevious">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button> *@
+                        <div class="slide-content">
+                            <div class="flex-grow-1 subheading mb-3">
+                                @CurrentItem.Title
+                                <h5 class="flex-shrink-0"><span style="font-weight: 600;">@CurrentItem.Date</span></h5>
+                            </div>
+                            <ul>
+                                @foreach (var module in CurrentItem.Modules)
+                                {
+                                    <li>
+                                        @module
+                                    </li>
+                                }
+                            </ul>
+                            <p>Grade: @CurrentItem.Grade</p>
+                        </div>
+@*                         <button class="slide-button" @onclick="OnNext">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button> *@
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-arrows" style="display: flex; justify-content">
+
+    </div>
+
+
+</Section>
+
+@code {
+    record Model(string Title, string Date, string[] Modules, string Grade);
+
+    IList<Model> Items = new List<Model>()
+    {
+        new Model
+        (
+            Title: "Stage 3",
+            Date: "2012 - 2013",
+            Modules: new []
+            {
+                "Cybercrime and Forensic Investigation",
+                "Advanced Databases and their Applications",
+                "Software Development and Project",
+                "Programming for Entertainment Systems",
+                "Graphics",
+                "Software Management",
+                "API Software Development."
+            },
+            Grade: "2nd"
+        ),
+        new Model
+        (
+            Title: "Stage 2",
+            Date: "2011 - 2012",
+            Modules: new []
+            {
+                "Alternative Computing Paradigms",
+                "Computational Intelligence",
+                "Server Administration",
+                "Embedded Systems",
+                "Databases",
+                "Information Retrieval",
+                "Human-Computer Interaction",
+                "IT Legislation and Ethics",
+                "Computer Science Integrating Project",
+                "Object-Oriented Software Engineering",
+                "Mobile Device Programming",
+                "Principles of Programming Structures & Algorithms"
+            },
+            Grade: "2nd"
+        ),
+        new Model
+        (
+            Title: "Stage 1",
+            Date: "2010 - 2011",
+            Modules: new []
+            {
+                "Computer Science Workshop",
+                "Computer Systems",
+                "Introduction to Computer and Information Security",
+                "Database Development",
+                "The Computing Professional",
+                "Mathematics with Applications",
+                "Software Engineering",
+                "Principles of Programming Structures & Algorithms"
+            },
+            Grade: "2nd"
+        ),
+    };
+
+    int Index = 0;
+
+    Model? CurrentItem;
+
+    protected override void OnInitialized()
+    {
+        CurrentItem = Items.FirstOrDefault();
+    }
+
+    void OnNext()
+    {
+        Index++;
+
+        Index = Index > Items.Count - 1 ? 0 : Index;
+
+        CurrentItem = Items[Index];
+    }
+
+    void OnPrevious()
+    {
+        Index--;
+
+        Index = Index < 0 ? Items.Count - 1 : Index;
+
+        CurrentItem = Items[Index];
+    }
+}

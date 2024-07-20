@@ -1,0 +1,17 @@
+﻿.profile {
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+
+    .profile {
+        display: none;
+    }
+}

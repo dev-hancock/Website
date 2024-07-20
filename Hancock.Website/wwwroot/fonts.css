@@ -1,0 +1,13 @@
+﻿@font-face {
+    font-family: 'Saira Extra Condensed';
+    src: url('/fonts/SairaExtraCondensed-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Saira Extra Condensed';
+    src: url('/fonts/SairaExtraCondensed-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}

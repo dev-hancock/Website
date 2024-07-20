@@ -1,0 +1,16 @@
+﻿@if (Items != null)
+{
+    <ul>
+        @foreach (var duty in Items)
+        {
+            <li>
+                @duty
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter]
+    public string[] Items { get; set; }
+}

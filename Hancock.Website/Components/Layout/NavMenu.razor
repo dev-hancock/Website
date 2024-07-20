@@ -1,0 +1,52 @@
+﻿<div class="nav">
+    <div class="nav-header">
+        <div class="nav-title">
+            <a href="#About">
+                Adam Hancock
+            </a>
+        </div>
+        <div class="nav-toggle @(ShowMenu ? "active" :"")" @onclick="OnToggleMenu">
+            <div class="menu-bar1"></div>
+            <div class="menu-bar2"></div>
+            <div class="menu-bar3"></div>
+        </div>
+        <div class="nav-image">
+            <div class="img"></div>
+        </div>
+    </div>
+    <div id="nav-items" class="nav-items @(ShowMenu ? "": "collapsed")">
+        @foreach (var item in _items)
+        {
+            <a class="nav-item" href="@item.Link" @onclick="OnItemClick">
+                @item.Name
+            </a>
+        }
+    </div>
+</div>
+
+@code {
+    string Title = "Adam Hancock";
+
+    List<NavItemModel> _items = new List<NavItemModel>
+    {
+        new NavItemModel("About", "#About"),
+        new NavItemModel("Experience", "#Experience"),
+        new NavItemModel("Education", "#Education"),
+        new NavItemModel("Skills", "#Skills"),
+        new NavItemModel("Interests", "#Interests"),
+        new NavItemModel("Contact", "#Contact"),
+    };
+
+    bool ShowMenu = false;
+
+
+    void OnToggleMenu()
+    {
+        ShowMenu = !ShowMenu;
+    }
+
+    void OnItemClick(MouseEventArgs e)
+    {
+        ShowMenu = false;
+    }
+}
