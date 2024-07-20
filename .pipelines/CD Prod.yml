@@ -23,7 +23,8 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
-    publishWebProjects: true
+    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/publish'
+    projects: '**/*.csproj'
   displayName: 'Publish'
 
 - task: AzureWebApp@1
