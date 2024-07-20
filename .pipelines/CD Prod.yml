@@ -31,7 +31,7 @@ steps:
   inputs:
     azureSubscription: 'AzureServiceConnection'
     appType: 'webAppLinux'
-    appName: 'ahancock'
+    appName: 'dev-hancock'
     package: '$(Build.ArtifactStagingDirectory)/publish'
     deploymentMethod: 'auto'
   displayName: 'Deploy'
