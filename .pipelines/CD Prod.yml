@@ -32,6 +32,6 @@ steps:
     azureSubscription: 'AzureServiceConnection'
     appType: 'webAppLinux'
     appName: 'dev-hancock'
-    package: '$(Build.ArtifactStagingDirectory)/publish/'
+    package: '$(Build.ArtifactStagingDirectory)/publish/*.zip'
     deploymentMethod: 'auto'
   displayName: 'Deploy'
