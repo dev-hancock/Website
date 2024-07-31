@@ -20,13 +20,13 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    arguments: '--configuration Release --no-restore --output $(Build.BinariesDirectory)/build'
+    arguments: '-c Release -o $(Build.BinariesDirectory)/build --no-restore'
     projects: '**/*.sln'
   displayName: 'Build'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    arguments: '--configuration Release --no-build --output $(Build.BinariesDirectory)/build'
+    arguments: '-c Release -o $(Build.BinariesDirectory)/build --no-build'
     projects: '**/*.sln'
   displayName: 'Test'
