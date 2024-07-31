@@ -11,21 +11,28 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
-    projects: '**/*.csproj'
+    projects: '**/*.sln'
   displayName: 'Restore'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    arguments: '--output $(Build.BinariesDirectory)/build'
-    projects: '**/*.csproj'
+    arguments: '-c Release -o $(Build.BinariesDirectory)/build --no-restore'
+    projects: '**/*.sln'
   displayName: 'Build'
 
 - task: DotNetCoreCLI@2
   inputs:
+    command: 'test'
+    arguments: '-c Release -o $(Build.BinariesDirectory)/build --no-build'
+    projects: '**/*.sln'
+  displayName: 'Test'
+
+- task: DotNetCoreCLI@2
+  inputs:
     command: 'publish'
-    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/publish'
-    projects: '**/*.csproj'
+    arguments: '-c Release -o $(Build.ArtifactStagingDirectory)/publish --no-build'
+    projects: '**/*.Website.csproj'
   displayName: 'Publish'
 
 - task: AzureWebApp@1
