@@ -1,0 +1,63 @@
+﻿@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@font-face {
+    font-family: 'JetBrainsMono';
+    font-style: normal;
+    font-weight: normal;
+    src: url('fonts/JetBrainsMono-Regular.ttf') format("truetype");
+}
+
+:root {
+    --nav-height: 100px;
+    --nav-width: calc(max(25%, 300px));
+    --bg-color: #24292E;
+    --accent-from:  #38bdf8;
+    --accent-to: #34d399;
+}
+
+html,
+body {
+    background-color: var(--bg-color);
+    font-family: JetBrainsMono;
+    scroll-behavior: smooth !important;
+}
+
+h1, h2, h3, h4, h5, h6 { outline: none; }
+
+.typewriter {
+    position: relative;
+    width: max-content;
+}
+
+.typewriter::before,
+.typewriter::after {
+    bottom: 0;
+    content: '';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.typewriter::before {
+    animation: typewriter 2.5s steps(24) 500ms forwards;
+    background: var(--main-bg-color);
+}
+
+.typewriter::after {
+    animation: typewriter 2.5s steps(24) 500ms forwards, blink 750ms steps(24) infinite;
+    background: var(--bg-color);
+    content: '_';
+}
+
+@keyframes typewriter {
+    to { left: 100%; }
+}
+
+@keyframes blink {
+    to { color: transparent; }
+}

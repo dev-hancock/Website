@@ -1,0 +1,28 @@
+﻿<div @onclick="OnToggled" class="group cursor-pointer">
+    <div class="@TopBarClass group-hover:!bg-white"></div>
+    <div class="@MidBarClass group-hover:!bg-white"></div>
+    <div class="@BotBarClass group-hover:!bg-white"></div>
+</div>
+
+@code {
+
+    [Parameter]
+    public bool IsToggled { get; set; }
+
+        const string BarClass = "w-8 h-0.5 bg-gray-400 transition-all duration-300 ease-in-out";
+
+    string TopBarClass => $"{BarClass} {(IsToggled ? "transform translate-y-[10px] rotate-[-45deg]" : "")}";
+
+    string MidBarClass => $"{BarClass} {(IsToggled ? "opacity-0" : "")} my-2";
+
+    string BotBarClass => $"{BarClass} {(IsToggled ? "transform translate-y-[-10px] rotate-[45deg]" : "")}";
+
+    [Parameter]
+    public EventCallback<bool> IsToggledChanged { get; set; }
+
+    async Task OnToggled()
+    {
+        await IsToggledChanged.InvokeAsync(!IsToggled);
+    }
+
+}

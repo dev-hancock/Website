@@ -1,0 +1,267 @@
+﻿<section id="work" class="text-white/80 pt-[calc(var(--nav-height)+3rem)] bg-black/15 flex items-center px-16 py-20">
+    <div class="mx-auto flex w-full max-w-6xl flex-col gap-12">
+        <h2 class="text-4xl font-semibold">Experience</h2>
+
+        @foreach (var item in Items)
+        {
+            <div class="bg-black/20 flex w-full flex-col rounded">
+                <div class="relative p-10">
+                    <div class="flex flex-col gap-4">
+                        <div class="flex flex-row flex-wrap items-center justify-between">
+                            <div class="min-w-[100px] text-sm uppercase">
+                                @item.Value.Date
+                            </div>
+                            <div class="flex-grow text-2xl">
+                                @item.Value.Title
+                            </div>
+                            <div class="flex flex-none items-end justify-end">
+                                @item.Value.Company
+                            </div>
+                        </div>
+
+                        <div class="flex flex-grow flex-col gap-4">
+
+                            <div class="flex flex-col gap-4">
+                                <div style="display: flex; gap: 20px;">
+                                    <span class="">
+                                        <i class="fa fa-map-marker" style="margin-right: 10px;"></i>
+                                        @item.Value.Location
+                                    </span>
+                                    <span>
+                                        <i class="fa fa-briefcase" style="margin-right: 10px;"></i>
+                                        @item.Value.Type
+                                    </span>
+                                </div>
+
+                                @if (item.Value.Description != null)
+                                {
+                                    <p>@item.Value.Description</p>
+                                }
+
+                                @if (item.Value.Duties != null)
+                                {
+                                    <ul class="flex list-none flex-col space-y-2">
+                                        @foreach (var duty in item.Value.Duties)
+                                        {
+                                            <li class="">@duty</li>
+                                        }
+                                    </ul>
+                                }
+
+                                @if (item.Value.Skills != null)
+                                {
+                                    <div class="flex flex-grow flex-wrap items-center justify-center gap-2">
+                                        @foreach (var tag in item.Value.Skills)
+                                        {
+                                            <div class="bg-white/10 select-none rounded-lg border px-3 py-1">
+                                                @tag
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+@code {
+
+    class Position
+    {
+        public string Date { get; set; } = null!;
+
+        public string Title { get; set; } = null!;
+
+        public string Company { get; set; } = null!;
+
+        public string? Link { get; set; }
+
+        public string Location { get; set; } = null!;
+
+        public string Type { get; set; } = null!;
+
+        public string? Description { get; set; }
+
+        public string[]? Duties { get; set; }
+
+        public string[]? Skills { get; set; }
+    }
+
+    class TimelineEntry<T>
+    {
+        public T Value { get; set; } = default!;
+
+        public bool IsExpanded { get; set; }
+    }
+
+    private TimelineEntry<Position>[] Items { get; } = {
+        new TimelineEntry<Position>
+        {
+            Value = new Position
+            {
+                Date = "Nov 2022",
+                Title = "Senior Software Engineer",
+                Company = "Advanced Instruments",
+                Link = "https://www.aicompanies.com/",
+                Location = "Ferndown",
+                Type = "Full-Time (Remote)",
+                Duties = new[]
+                {
+                    "Designed, developed, and successfully deployed the product within a 5-week timeline.",
+                    "Created comprehensive design documents outlining application architecture.",
+                    "Facilitated meetings and retrospectives to drive project progress.",
+                    "Developed a CQRS Blazor application with SignalR, incorporating event-sourcing for real-time functionality.",
+                    "Implemented automated build and deployment pipelines using YAML."
+                },
+                Skills = new[]
+                {
+                    "EF Core",
+                    "CQRS",
+                    "YAML",
+                    "CI/CD Pipelines",
+                    "WPF",
+                    "REST APIs",
+                    "Reactive",
+                    "WiX Toolset",
+                    "Design",
+                    "Code Review",
+                    "C#",
+                    "SignalR",
+                    "Blazor",
+                    "Event Sourcing",
+                    "Agile",
+                    "Scrum",
+                    "Sprint Planning",
+                    "Swagger",
+                    "Python",
+                    "PyTest"
+                }
+            },
+            IsExpanded = true
+        },
+        new TimelineEntry<Position>
+        {
+            Value = new Position
+            {
+                Date = "Jun 2018",
+                Title = "Software Developer",
+                Company = "Optimal Industrial Technologies",
+                Link = "https://optimal-tech.co.uk/",
+                Location = "Bristol",
+                Type = "Full-Time (Hybrid)",
+                Description = "A Job",
+                Duties = new[]
+                {
+                    "A Duty"
+                },
+                Skills = new[]
+                {
+                    "CI/CD Pipelines",
+                    "C#",
+                    "Python",
+                    "REST",
+                    "EF Core",
+                    "Blazor",
+                    "WPF",
+                    "SignalR"
+                }
+            }
+        },
+        new TimelineEntry<Position>
+        {
+            Value = new Position
+            {
+                Date = "Sept 2016",
+                Title = "Software Developer",
+                Company = "Solentim",
+                Link = "https://www.aicompanies.com/",
+                Location = "Ferndown",
+                Type = "Full-Time (On-Site)",
+                Description = "A Job",
+                Duties = new[]
+                {
+                    "A Duty"
+                },
+                Skills = new[]
+                {
+                    "CI/CD Pipelines",
+                    "C#",
+                    "Python",
+                    "REST",
+                    "EF Core",
+                    "Blazor",
+                    "WPF",
+                    "SignalR"
+                }
+            }
+        },
+        new TimelineEntry<Position>
+        {
+            Value = new Position
+            {
+                Date = "Jun 2015",
+                Title = "Software Developer",
+                Company = "Ionoco Tech",
+                Link = "https://ionoco.com/",
+                Location = "Winchester",
+                Type = "Full-Time (On-Site)",
+                Description = "A Job",
+                Duties = new[]
+                {
+                    "A Duty"
+                },
+                Skills = new[]
+                {
+                    "CI/CD Pipelines",
+                    "C#",
+                    "Python",
+                    "REST",
+                    "EF Core",
+                    "Blazor",
+                    "WPF",
+                    "SignalR"
+                }
+            }
+        },
+        new TimelineEntry<Position>
+        {
+            Value = new Position
+            {
+                Date = "Dec 2013",
+                Title = "Software Developer",
+                Company = "Moov",
+                Link = "https://www.moov.tv/",
+                Location = "London",
+                Type = "Full-Time (On-Site)",
+                Description = "A Job",
+                Duties = new[]
+                {
+                    "A Duty"
+                },
+                Skills = new[]
+                {
+                    "CI/CD Pipelines",
+                    "C#",
+                    "Python",
+                    "REST",
+                    "EF Core",
+                    "Blazor",
+                    "WPF",
+                    "SignalR"
+                }
+            }
+        }
+    };
+
+    void Toggle(TimelineEntry<Position> entry)
+    {
+        entry.IsExpanded = !entry.IsExpanded;
+    }
+
+}

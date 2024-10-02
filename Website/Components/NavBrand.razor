@@ -1,0 +1,28 @@
+﻿<NavLink href="/" @onclick="OnNavigated">
+
+    <!-- Mobile -->
+    <div class="block lg:hidden">
+        <img src="/logos/brand-center.svg" />
+    </div>
+
+    <!-- Desktop -->
+    <div class="hidden lg:block">
+        <img src="/logos/brand-left.svg"/>
+    </div>
+
+</NavLink>
+
+@code {
+
+    [Parameter]
+    public bool IsToggled { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsToggledChanged { get; set; }
+
+    async Task OnNavigated()
+    {
+        await IsToggledChanged.InvokeAsync(false);
+    }
+
+}

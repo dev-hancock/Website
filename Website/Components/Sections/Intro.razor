@@ -1,0 +1,93 @@
+﻿<section id="intro" class="text-white/80 min-h-[calc(100vh-var(--nav-height))] flex flex-col px-16">
+
+    <div class="mx-auto flex w-full max-w-6xl flex-grow flex-col">
+        <div class="flex flex-grow flex-col justify-between gap-12">
+
+            <div class="h-[var(--nav-height)]"></div>
+
+            <div class="max-w-screen flex flex-grow flex-col justify-center overflow-x-hidden py-20">
+                <div class="flex flex-col gap-6">
+                    <h1 class="flex flex-col gap-6 text-6xl font-semibold">
+                        <span>Hi,</span>
+                        <span>I'm <span class="">Adam Hancock</span></span>
+                    </h1>
+                    <p class="typewriter relative overflow-hidden text-2xl lg:text-3xl">
+                        A Full Stack C# .NET Developer
+                        <span class="animate-[blink]">_</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="relative flex items-end lg:px-16">
+                <div class="flex flex-grow flex-wrap items-end justify-center gap-2">
+                    @foreach (var skill in Skills)
+                    {
+                        <div class="select-none rounded-xl border px-4 py-2 xl:rounded-2xl xl:px-6 xl:py-3.5">
+                            @skill
+                        </div>
+                    }
+                </div>
+                <div class="from-[var(--bg-color)] pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent"></div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-12 p-6">
+                <a href="#about" class="flex items-center gap-2">
+                    <span class="text-xl">More About Me</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#contact" class="flex items-center gap-2">
+                    <span class="text-xl">Get In Touch</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="flex items-center justify-center px-6 pt-6 lg:pl-16 lg:pr-8">
+                <div class="bg-black/15 text-white/80 flex h-10 w-20 items-center justify-center rounded-t-full">
+                    <i class="fa-solid fa-arrow-down pt-1.5"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@code {
+
+    string[] Skills =
+    {
+        "CQRS",
+        "Reactive",
+        "C#",
+        "Python",
+        "Devops",
+        "Azure",
+        "Event Sourcing",
+        "PyTest",
+        "AutoMoq",
+        "YAML",
+        "CI/CD Pipelines",
+        "EF Core",
+        "Blazor",
+        "Swagger",
+        "SQL",
+        ".NET",
+        "REST",
+        "API",
+        "SingalR",
+        "Blazor",
+        "WiX Toolset",
+        "Code Review",
+        "Problem Solving",
+        "Agile",
+        "Sprints",
+        "Retrospectives",
+        "WPF",
+        "ASP.NET Core",
+        "CUDA",
+        "TensorFlow",
+        "PyTorch",
+        "Testing",
+        "Sql Server"
+    };
+
+}

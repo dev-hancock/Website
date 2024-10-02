@@ -1,0 +1,86 @@
+﻿<div class="text-white/80 hidden text-2xl lg:block">
+
+    <div class="flex w-full flex-col">
+        <ul class="group w-full">
+            @foreach (var item in Items)
+            {
+                <li>
+                    <NavLink href="@item.Href" class="text-white/80 group-hover:!text-white/60 py-2.5" ActiveClass="text-white">
+                        <div class="p-4 transition-colors hover:!text-white">
+                            <span>@item.Name</span>
+                        </div>
+                    </NavLink>
+                </li>
+            }
+        </ul>
+    </div>
+
+</div>
+
+<div class="transition-[height] duration-200 ease-in-out @(IsToggled ? "h-screen" : "h-0")">
+    <div class="text-white/80 h-[calc(100%-var(--nav-height))] text-2xl @(IsToggled ? "" : "hidden")">
+        <ul class="group my-auto flex h-full flex-col justify-center">
+            @foreach (var item in Items)
+            {
+                <li class="flex w-full flex-col items-center justify-center">
+                    <NavLink href="@item.Href" class="group-hover:text-white/60 w-full" @onclick="OnNavigated">
+                        <div class="flex justify-center p-4 transition-colors hover:!text-white">
+                            <span>@item.Name</span>
+                        </div>
+                    </NavLink>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public bool IsToggled { get; set; }
+
+    class NavItem
+    {
+        public string Href { get; set; } = default!;
+
+        public string Name { get; set; } = default!;
+    }
+
+    [Parameter]
+    public EventCallback<bool> IsToggledChanged { get; set; }
+
+    async Task OnNavigated()
+    {
+        await IsToggledChanged.InvokeAsync(false);
+    }
+
+    NavItem[] Items =
+    {
+        new NavItem
+        {
+            Href = "#intro",
+            Name = "Home"
+        },
+        new NavItem
+        {
+            Href = "#about",
+            Name = "About"
+        },
+    // new NavItem
+    // {
+    //     Href = "#work",
+    //     Name = "Work"
+    // },
+        new NavItem
+        {
+            Href = "#projects",
+            Name = "Projects"
+        },
+        new NavItem
+        {
+            Href = "#contact",
+            Name = "Contact"
+        }
+    };
+
+}

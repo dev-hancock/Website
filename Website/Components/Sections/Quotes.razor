@@ -1,0 +1,42 @@
+﻿<section id="work" class="text-white/80 pt-[calc(var(--nav-height)+3rem)] bg-black/15 flex items-center px-16 py-20">
+    <div class="mx-auto flex max-w-6xl flex-col gap-12">
+        <h2 class="text-4xl font-semibold">Quotes</h2>
+
+        <div class="columns-1 px-0 md:columns-2 xl:columns-2">
+
+            @foreach (var item in Items)
+            {
+                <div class="bg-white/10 relative mb-4 flex break-inside-avoid flex-col gap-4 rounded-lg p-10">
+                    <div class="bg-white/20 mb-6 flex h-14 w-14 flex-none items-center justify-center rounded-full">
+                        <i class="fa-solid fa-quote-right text-2xl"></i>
+                    </div>
+                    <p class="text-xl">
+                        @item.Text
+                    </p>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+@code {
+
+    readonly Quote[] Items =
+    {
+        new Quote
+        {
+            Text = "Consistently contributes to the team, demonstrating a forward-thinking approach focused on the maintainability and adaptability of our projects."
+        },
+        new Quote
+        {
+            Text = "Always approachable for team members seeking guidance, and engages in meaningful design discussions."
+        }
+    };
+
+    class Quote
+    {
+        public string Text { get; set; } = default!;
+    }
+
+}

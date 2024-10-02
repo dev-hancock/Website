@@ -1,0 +1,50 @@
+﻿<!-- Desktop -->
+<nav class="w-[var(--nav-width)] fixed left-0 top-0 z-50 hidden min-h-screen lg:flex">
+
+    <div class="bg-black/40 flex w-full backdrop-blur-[20px]">
+        <div class="flex w-full justify-end pr-8">
+            <div class="flex w-[220px] flex-col justify-between gap-8">
+
+                <div class="flex flex-grow items-center">
+                    <NavBrand/>
+                </div>
+
+                <div class="flex flex-grow flex-col justify-center">
+                    <NavMenu/>
+                </div>
+
+                <div class="flex flex-grow items-center">
+                    <Social/>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile -->
+<nav class="fixed left-0 top-0 z-50 flex w-full lg:hidden">
+
+    <div class="bg-black/40 flex w-full flex-col justify-center backdrop-blur-[20px]">
+        <div class="min-h-[var(--nav-height)] flex w-full items-center justify-between px-8">
+            <div class="w-[250px]">
+                <NavBrand @bind-IsToggled="IsToggled"/>
+            </div>
+            <NavToggle @bind-IsToggled="IsToggled"/>
+        </div>
+
+        <NavMenu @bind-IsToggled="IsToggled"/>
+    </div>
+</nav>
+
+
+@code
+{
+    bool IsToggled { get; set; }
+
+    void OnNavigated()
+    {
+        IsToggled = false;
+    }
+
+}
