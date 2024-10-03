@@ -8,7 +8,6 @@ namespace Website
 {
     using System.Text;
     using Components;
-    using Interop;
     using Microsoft.Extensions.Options;
     using Services.GitHub;
     using Services.MailGun;
@@ -96,8 +95,6 @@ namespace Website
             services.AddHostedService<GitHubWorker>();
 
             services.AddRazorComponents().AddInteractiveServerComponents();
-
-            services.AddScoped<Gsap>();
         }
     }
 }
