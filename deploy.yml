@@ -25,6 +25,7 @@ steps:
     command: 'publish'
     arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/publish'
     projects: '**/*.csproj'
+    publishWebProjects: true
   displayName: 'Publish'
 
 - task: AzureWebApp@1
@@ -32,6 +33,6 @@ steps:
     azureSubscription: 'AzureServiceConnection'
     appType: 'webAppLinux'
     appName: 'dev-hancock'
-    package: '$(Build.ArtifactStagingDirectory)/publish'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     deploymentMethod: 'auto'
   displayName: 'Deploy'
