@@ -9,6 +9,7 @@ namespace Website
     using System.Text;
     using Components;
     using Microsoft.Extensions.Options;
+    using Serilog;
     using Services.GitHub;
     using Services.MailGun;
     using Settings;
@@ -23,6 +24,10 @@ namespace Website
 
         private static WebApplication Build(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
+
             var builder = WebApplication.CreateBuilder(args);
 
             ConfigureServices(builder.Services, builder.Configuration);
@@ -78,6 +83,8 @@ namespace Website
 
         private static void ConfigureServices(IServiceCollection services, IConfiguration config)
         {
+            services.AddSerilog();
+
             services.AddSingleton(new AppState());
 
             ConfigureOptions<Config>(services, config.GetSection("Config"));
