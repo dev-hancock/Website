@@ -4,6 +4,11 @@ parameters:
   key: ''
 
 steps:
-- name: Encrypt File
-  run: |
-    openssl aes-256-cbc -in ${{ parameters.input_file }} -out ${{ parameters.output_file }} -k ${{ parameters.key }}
+- task: PowerShell@2
+  displayName: Decrypt File
+  inputs:
+    targetType: inline
+    script: |
+      openssl aes-256-cbc -in '${{ parameters.input_file }}' -out '${{ parameters.output_file }}' -k $env:KEY
+  env:
+    KEY: $(key)
