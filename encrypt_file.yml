@@ -1,0 +1,9 @@
+parameters:
+  input_file: ''
+  output_file: ''
+  key: ''
+
+steps:
+- name: Encrypt File
+  run: |
+    openssl aes-256-cbc -in ${{ parameters.input_file }} -out ${{ parameters.output_file }} -k ${{ parameters.key }}

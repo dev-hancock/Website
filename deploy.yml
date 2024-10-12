@@ -1,38 +1,77 @@
+trigger: 'none'
+
 pool: 'Default'
 
-steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '5.x'
-    installationPath: $(Agent.ToolsDirectory)/dotnet
-  displayName: 'Install'
+variables:
+  configuration: 'Release'
+  dotnet_version: '8.x'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'restore'
-    projects: '**/*.csproj'
-  displayName: 'Restore'
+stages:
+  - stage: Build
+    jobs:
+      - job: Build
+        displayName: 'Build'
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Install .NET SDK'
+            inputs:
+              packageType: 'sdk'
+              version: $(dotnet_version)
+              installationPath: $(Agent.ToolsDirectory)/dotnet
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
-  displayName: 'Build'
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore'
+            inputs:
+              command: 'restore'
+              projects: '**/*.csproj'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/publish'
-    projects: '**/*.csproj'
-    publishWebProjects: true
-  displayName: 'Publish'
+          - task: DotNetCoreCLI@2
+            displayName: 'Build'
+            inputs:
+              command: 'build'
+              projects: '**/*.csproj'
+              arguments: '--configuration $(configuration)'
 
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: 'AzureServiceConnection'
-    appType: 'webAppLinux'
-    appName: 'dev-hancock'
-    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-    deploymentMethod: 'auto'
-  displayName: 'Deploy'
+          - template: decrypt-file.yml
+            parameters:
+              input_file: './appsettings.secrets.json.enc'
+              output_file: './appsettings.secrets.json'
+              key: $(DECRYPTION_KEY)
+
+  - stage: Publish
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - job: Publish
+        displayName: 'Publish'
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: 'Publish'
+            inputs:
+              command: 'publish'
+              arguments: '--configuration $(configuration) --output $(Build.ArtifactStagingDirectory)/publish'
+              projects: '**/*.csproj'
+              publishWebProjects: true
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish'
+            inputs:
+              pathToPublish: '$(Build.ArtifactStagingDirectory)/publish'
+              artifactName: 'drop'
+              publishLocation: 'Container'
+
+  - stage: Deploy
+    dependsOn: Publish
+    condition: succeeded()
+    jobs:
+      - job: DeployToAzure
+        displayName: 'Deploy'
+        steps:
+          - task: AzureWebApp@1
+            displayName: 'Deploy'
+            inputs:
+              azureSubscription: 'AzureServiceConnection'
+              appType: 'webAppLinux'
+              appName: 'dev-hancock'
+              package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+              deploymentMethod: 'auto'

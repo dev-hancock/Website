@@ -1,0 +1,9 @@
+parameters:
+  input_file: ''
+  output_file: ''
+  key: ''
+
+steps:
+- name: Decrypt File
+  run: |
+    openssl aes-256-cbc -d -in ${{ parameters.input_file }} -out ${{ parameters.output_file }} -k ${{ parameters.key }}
