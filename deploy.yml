@@ -25,18 +25,18 @@ stages:
               command: 'restore'
               projects: '**/*.csproj'
 
+          - template: decrypt-file.yml
+            parameters:
+              input_file: './website/appsettings.secrets.json.enc'
+              output_file: './website/appsettings.secrets.json'
+              key: $(ENCRYPTION_KEY)
+
           - task: DotNetCoreCLI@2
             displayName: 'Build'
             inputs:
               command: 'build'
               projects: '**/*.csproj'
               arguments: '--configuration $(configuration)'
-
-          - template: decrypt-file.yml
-            parameters:
-              input_file: './website/appsettings.secrets.json.enc'
-              output_file: 'appsettings.secrets.json'
-              key: $(ENCRYPTION_KEY)
 
   - stage: Publish
     dependsOn: Build
