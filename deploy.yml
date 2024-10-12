@@ -34,8 +34,8 @@ stages:
 
           - template: decrypt-file.yml
             parameters:
-              input_file: './appsettings.secrets.json.enc'
-              output_file: './appsettings.secrets.json'
+              input_file: './website/appsettings.secrets.json.enc'
+              output_file: './website/appsettings.secrets.json'
               key: $(DECRYPTION_KEY)
 
   - stage: Publish
