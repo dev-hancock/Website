@@ -33,7 +33,7 @@ namespace Website
             builder.Configuration
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile("appsettings.secrets.json")
+                .AddJsonFile("appsettings.secrets.json", optional: true)
                 .AddEnvironmentVariables();
 
             ConfigureServices(builder.Services, builder.Configuration);
