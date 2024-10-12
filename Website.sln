@@ -12,8 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{CF40AD67-BC96-4AA0-9EDC-529DA9462BE3}"
 	ProjectSection(SolutionItems) = preProject
-		decrypt_file.yml = decrypt_file.yml
-		encrypt_file.yml = encrypt_file.yml
+		decrypt-file.yml = decrypt-file.yml
+		encrypt-file.yml = encrypt-file.yml
 	EndProjectSection
 EndProject
 Global
