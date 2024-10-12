@@ -30,6 +30,12 @@ namespace Website
 
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Configuration
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.secrets.json")
+                .AddEnvironmentVariables();
+
             ConfigureServices(builder.Services, builder.Configuration);
 
             var app = builder.Build();
