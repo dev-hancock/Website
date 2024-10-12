@@ -11,7 +11,7 @@ steps:
     script: |
       Write-Host "$(KEY)"
       Write-Host "$(key)"
-      Write-Host "$env:KEY")
+      Write-Host "$env:KEY"
 
       openssl aes-256-cbc -d -in '${{ parameters.input_file }}' -out '${{ parameters.output_file }}' -k '$(KEY)'
   env:
