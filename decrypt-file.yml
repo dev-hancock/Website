@@ -9,6 +9,10 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      openssl aes-256-cbc -d -in '${{ parameters.input_file }}' -out '${{ parameters.output_file }}' -k '$env:KEY'
+      Write-Host "$(KEY)"
+      Write-Host "$(key)"
+      Write-Host "$env:KEY")
+
+      openssl aes-256-cbc -d -in '${{ parameters.input_file }}' -out '${{ parameters.output_file }}' -k '$(KEY)'
   env:
     KEY: $(key)
