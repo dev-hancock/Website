@@ -25,18 +25,12 @@ stages:
               command: 'restore'
               projects: '**/*.csproj'
 
-          - template: decrypt-file.yml
-            parameters:
-              input_file: './website/appsettings.secrets.json.enc'
-              output_file: './website/appsettings.secrets.json'
-              key: $(ENCRYPTION_KEY)
-
           - task: DotNetCoreCLI@2
             displayName: 'Build'
             inputs:
               command: 'build'
               projects: '**/*.csproj'
-              arguments: '--configuration $(configuration) --output $(Build.BinariesDirectory)'
+              arguments: '--configuration $(configuration)'
 
   - stage: Publish
     dependsOn: Build
@@ -45,11 +39,17 @@ stages:
       - job: Publish
         displayName: 'Publish'
         steps:
+          - template: decrypt-file.yml
+            parameters:
+              input_file: './website/appsettings.secrets.json.enc'
+              output_file: './website/appsettings.secrets.json'
+              key: $(ENCRYPTION_KEY)
+
           - task: DotNetCoreCLI@2
             displayName: 'Publish'
             inputs:
               command: 'publish'
-              arguments: '--configuration $(configuration) --no-build --output $(Build.ArtifactStagingDirectory)/publish'
+              arguments: '--configuration $(configuration) --output $(Build.ArtifactStagingDirectory)/publish'
               projects: '**/*.csproj'
               publishWebProjects: true
 
@@ -64,7 +64,7 @@ stages:
     dependsOn: Publish
     condition: succeeded()
     jobs:
-      - job: DeployToAzure
+      - job: Deploy
         displayName: 'Deploy'
         steps:
           - task: DownloadPipelineArtifact@2
