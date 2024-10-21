@@ -65,7 +65,7 @@ namespace Website
         {
             var options = services.GetService<GithubOptions>()!;
 
-            client.BaseAddress = new Uri("https://api.github.com/");
+            client.BaseAddress = new Uri($"{options.BaseUrl}");
             client.DefaultRequestHeaders.Add("User-Agent", "Hancock.Software.Solutions");
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {options.Token}");
         }
@@ -76,7 +76,7 @@ namespace Website
 
             var token = Convert.ToBase64String(Encoding.UTF8.GetBytes($"api:{options.ApiKey}"));
 
-            client.BaseAddress = new Uri($"https://api.mailgun.net/v3/{options.Domain}/");
+            client.BaseAddress = new Uri($"{options.BaseUrl}v3/{options.Domain}/");
             client.DefaultRequestHeaders.Add("User-Agent", "Hancock.Software.Solutions");
             client.DefaultRequestHeaders.Add("Authorization", $"Basic api:{token}");
         }

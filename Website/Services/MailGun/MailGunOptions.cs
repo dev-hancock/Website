@@ -13,5 +13,7 @@ namespace Website.Services.MailGun
         public string Domain { get; set; }
 
         public string To { get; set; }
+
+        public string BaseUrl { get; set; }
     }
 }

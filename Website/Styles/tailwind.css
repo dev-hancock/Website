@@ -12,7 +12,7 @@
 }
 
 :root {
-    --nav-height: 100px;
+    --nav-height: 80px;
     --nav-width: calc(max(25%, 300px));
     --bg-color: #24292E;
     --accent-from:  #38bdf8;

@@ -8,10 +8,10 @@ namespace Website.Services.GitHub
 {
     public class GithubOptions
     {
-        public string BaseAddress { get; set; } = "https://api.github.com/";
-
         public string Token { get; set; }
 
         public string Username { get; set; }
+
+        public string BaseUrl { get; set; }
     }
 }
