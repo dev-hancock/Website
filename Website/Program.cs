@@ -6,6 +6,7 @@
 
 namespace Website
 {
+    using System.Reflection;
     using System.Text;
     using Components;
     using Microsoft.Extensions.Options;
@@ -63,21 +64,30 @@ namespace Website
 
         private static void ConfigureGithub(IServiceProvider services, HttpClient client)
         {
-            var options = services.GetService<GithubOptions>()!;
+            var config = services.GetService<Config>()!;
+
+            var options = config.Github!;
 
             client.BaseAddress = new Uri($"{options.BaseUrl}");
-            client.DefaultRequestHeaders.Add("User-Agent", "Hancock.Software.Solutions");
+            client.DefaultRequestHeaders.Add("User-Agent", GetUserAgent(config));
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {options.Token}");
+        }
+
+        private static string GetUserAgent(Config config)
+        {
+            return $"{config.Name}/{Assembly.GetExecutingAssembly().GetName().Version} ({config.Website})";
         }
 
         private static void ConfigureMailGun(IServiceProvider services, HttpClient client)
         {
-            var options = services.GetService<MailGunOptions>()!;
+            var config = services.GetService<Config>()!;
+
+            var options = config.MailGun!;
 
             var token = Convert.ToBase64String(Encoding.UTF8.GetBytes($"api:{options.ApiKey}"));
 
             client.BaseAddress = new Uri($"{options.BaseUrl}v3/{options.Domain}/");
-            client.DefaultRequestHeaders.Add("User-Agent", "Hancock.Software.Solutions");
+            client.DefaultRequestHeaders.Add("User-Agent", GetUserAgent(config));
             client.DefaultRequestHeaders.Add("Authorization", $"Basic api:{token}");
         }
 
@@ -94,6 +104,8 @@ namespace Website
             services.AddSingleton(new AppState());
 
             ConfigureOptions<Config>(services, config.GetSection("Config"));
+            
+            ConfigureOptions<CompanyOptions>(services, config.GetSection("Config:Company"));
 
             ConfigureOptions<MailGunOptions>(services, config.GetSection("Config:MailGun"));
 

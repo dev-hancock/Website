@@ -10,10 +10,56 @@
 </footer>
 
 @code {
+    string Copyright => GetCopyright();
 
-    string Copyright => $"Copyright © {(DateTime.UtcNow.Year != Config.Year ? $"{Config.Year} - {DateTime.UtcNow.Year}" : Config.Year)} - {Config.CompanyName} ({Config.CompanyNumber}). All rights reserved.";
+    string GetCopyright()
+    {
+        return new CopyrightBuilder(Options?.Registered)
+            .WithName(Options?.Name)
+            .WithNumber(Options?.Number)
+            .Build();
+    }
 
     [Inject]
-    public Config Config { get; set; } = default!;
+    public CompanyOptions? Options { get; set; }
+
+    class CopyrightBuilder
+    {
+        private string? _name;
+        private string? _number;
+        private string? _year;
+
+        public CopyrightBuilder(int? year)
+        {
+            if (year < DateTime.MinValue.Year || !year.HasValue)
+            {
+                _year = $"{DateTime.UtcNow.Year}";
+            }
+
+            _year = year < DateTime.UtcNow.Year ? $"{year} - {DateTime.UtcNow.Year}" : $"{year}";
+        }
+
+        public CopyrightBuilder WithName(string? name)
+        {
+            _name = !string.IsNullOrWhiteSpace(name) ? name : null;
+            return this;
+        }
+
+        public CopyrightBuilder WithNumber(string? number)
+        {
+            _number = !string.IsNullOrWhiteSpace(number) ? number : null;
+            return this;
+        }
+
+        public string Build()
+        {
+            return this switch
+            {
+                {_name: not null, _number: not null} => $"Copyright © {_year} - {_name} ({_number}). All rights reserved.",
+                {_name: not null} => $"Copyright © {_year} - {_name}. All rights reserved.",
+                _ => $"Copyright © {_year}. All rights reserved."
+            };
+        }
+    }
 
 }

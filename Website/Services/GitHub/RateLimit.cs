@@ -19,9 +19,6 @@ namespace Website.Services.GitHub
         [JsonPropertyName("reset")]
         public int Reset { get; set; }
 
-        [JsonPropertyName("resource")]
-        public string Resource { get; set; }
-
         [JsonPropertyName("used")]
         public int Used { get; set; }
     }

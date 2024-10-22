@@ -7,7 +7,7 @@
 namespace Website.State
 {
     using System.Runtime.CompilerServices;
-    using Models;
+    using Website.Services.GitHub;
 
     public class AppState
     {

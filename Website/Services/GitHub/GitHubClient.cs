@@ -6,7 +6,8 @@
 
 namespace Website.Services.GitHub
 {
-    using Models;
+    using System.Net.Http.Headers;
+    using System.Text.Json;
 
     public class GitHubClient
     {
@@ -17,14 +18,53 @@ namespace Website.Services.GitHub
             _client = factory.CreateClient("GitHub");
         }
 
-        public Task<Resources> GetRateLimit(CancellationToken token = default)
+        public RateLimit? Limits { get; private set; }
+
+        public Task<Repository[]?> GetRepositories(string username, CancellationToken token = default)
         {
-            return _client.GetFromJsonAsync<Resources>("rate_limit", token)!;
+            return Get<Repository[]>($"users/{username}/repos", token);
         }
 
-        public Task<Repository[]> GetRepositories(string username, CancellationToken token = default)
+        private async Task<T?> Get<T>(string url, CancellationToken token = default) where T : class
         {
-            return _client.GetFromJsonAsync<Repository[]>($"users/{username}/repos", token)!;
+            var response = await _client.GetAsync(url, token);
+
+            UpdateRateLimits(response.Headers);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var stream = await response.Content.ReadAsStreamAsync(token);
+
+                return await JsonSerializer.DeserializeAsync<T>(stream, JsonSerializerOptions.Default, token);
+            }
+
+            return default(T);
+        }
+
+        private T? GetHeaderValue<T>(HttpHeaders headers, string header)
+        {
+            if (headers.TryGetValues(header, out var values))
+            {
+                var value = values.FirstOrDefault();
+
+                if (value != null)
+                {
+                    return (T)Convert.ChangeType(value, typeof(T));
+                }
+            }
+
+            return default(T);
+        }
+
+        private void UpdateRateLimits(HttpHeaders headers)
+        {
+            Limits = new RateLimit
+            {
+                Limit = GetHeaderValue<int>(headers, "x-ratelimit-limit"),
+                Remaining = GetHeaderValue<int>(headers, "x-ratelimit-remaining"),
+                Used = GetHeaderValue<int>(headers, "x-ratelimit-used"),
+                Reset = GetHeaderValue<int>(headers, "x-ratelimit-reset")
+            };
         }
     }
 }

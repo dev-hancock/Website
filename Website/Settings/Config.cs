@@ -18,16 +18,18 @@ namespace Website.Settings
             "BS16 5AU"
         };
 
-        public string CompanyName { get; set; } = "Hancock Software Solutions Ltd";
+        public string Name { get; set; } = default!;
 
-        public string CompanyNumber { get; set; } = "15859930";
+        public string Website { get; set; } = default!;
 
-        public string Email { get; set; }
+        public CompanyOptions? Company { get; set; }
 
-        public GithubOptions Github { get; set; }
+        public string? Email { get; set; }
 
-        public MailGunOptions MailGun { get; set; }
+        public GithubOptions? Github { get; set; }
 
-        public int Year { get; set; } = 2024;
+        public MailGunOptions? MailGun { get; set; }
+
+        public int? Year { get; set; } = 2024;
     }
 }

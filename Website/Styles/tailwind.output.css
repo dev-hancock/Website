@@ -747,6 +747,10 @@ video {
   max-width: 72rem;
 }
 
+.max-w-4xl {
+  max-width: 56rem;
+}
+
 .flex-none {
   flex: none;
 }
@@ -913,6 +917,10 @@ video {
   overflow-x: hidden;
 }
 
+.text-wrap {
+  text-wrap: wrap;
+}
+
 .break-words {
   overflow-wrap: break-word;
 }
@@ -1027,11 +1035,6 @@ video {
   padding-right: 0px;
 }
 
-.px-16 {
-  padding-left: 4rem;
-  padding-right: 4rem;
-}
-
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -1095,6 +1098,10 @@ video {
 
 .pt-\[calc\(var\(--nav-height\)\+3rem\)\] {
   padding-top: calc(var(--nav-height) + 3rem);
+}
+
+.text-center {
+  text-align: center;
 }
 
 .text-2xl {
