@@ -1,9 +1,0 @@
-﻿#components-reconnect-modal {
-    display: none;
-}
-
-    #components-reconnect-modal.components-reconnect-show,
-    #components-reconnect-modal.components-reconnect-failed,
-    #components-reconnect-modal.components-reconnect-rejected {
-        display: block;
-    }

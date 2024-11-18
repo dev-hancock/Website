@@ -1,0 +1,103 @@
+﻿<section id="contact" class="text-white/85 pt-[calc(var(--nav-height)+3rem)] bg-white/5 flex items-center px-6 py-20 md:px-16">
+    <div class="mx-auto flex max-w-6xl flex-col gap-12">
+        <h2 class="text-4xl font-semibold">Get in Touch</h2>
+
+        <div class="grid gap-8 md:grid-cols-2">
+
+            <div class="flex flex-col justify-between gap-8">
+                <p class="text-base leading-relaxed lg:text-lg">
+                    Whether you're ready to start a new project or need help with an existing one, I'm here to assist.
+                    Let's collaborate to create software that meets your needs and exceeds your expectations.
+                </p>
+
+                <div class="flex flex-grow flex-col justify-center">
+                    <ul class="space-y-4">
+                        <li>
+                            <div class="flex items-center space-x-6">
+                                <div class="bg-white/20 flex h-14 w-14 flex-none items-center justify-center rounded-full">
+                                    <i class="fa-solid fa-envelope text-2xl text-white"></i>
+                                </div>
+                                <a href="mailto:hello@dev-hancock.co.uk" class="text-xl text-white hover:underline">hello@dev-hancock.co.uk</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="flex items-center space-x-6">
+                                <div class="bg-white/20 flex h-14 w-14 flex-none items-center justify-center rounded-full">
+                                    <i class="fa-solid fa-location-dot text-2xl text-white"></i>
+                                </div>
+                                <span class="text-xl text-white">Bristol, UK</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <EditForm Model="@_message" OnValidSubmit="@Submit" FormName="Contact">
+                <DataAnnotationsValidator/>
+                <ValidationSummary/>
+
+                <div class="space-y-6">
+                    <!-- Name and Email -->
+                    <div>
+                        <label class="mb-1 block text-sm font-medium" for="email">Email</label>
+                        <InputText type="email" id="email" @bind-Value="_message!.Email"
+                                   class="bg-black/20 w-full border border-transparent p-2 text-white focus:border-[var(--accent-from)] focus:outline-none"
+                                   placeholder="Enter your email"/>
+                    </div>
+
+                    <!-- Subject -->
+                    <div>
+                        <label class="mb-1 block text-sm font-medium" for="subject">Subject</label>
+                        <InputText id="subject" @bind-Value="_message!.Subject"
+                                   class="bg-black/20 w-full border border-transparent p-2 text-white focus:border-[var(--accent-from)] focus:outline-none"
+                                   placeholder="Enter the subject"/>
+                    </div>
+
+                    <!-- Message -->
+                    <div>
+                        <label class="mb-1 block text-sm font-medium" for="message">Message</label>
+                        <InputTextArea id="message" @bind-Value="_message!.Body" rows="5"
+                                       class="bg-black/20 min-h-[150px] w-full resize-y border border-transparent p-2 text-white focus:border-[var(--accent-from)] focus:outline-none"
+                                       placeholder="Enter your message">
+                        </InputTextArea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="bg-[var(--accent-from)] text-[var(--bg-color)] px-6 py-2 font-semibold hover:bg-opacity-90 focus:outline-none">
+                        Submit
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</section>
+
+
+@code {
+
+    [Inject]
+    HttpClient Client { get; set; } = default!;
+
+    MessageDto? _message = new();
+
+    async Task Submit()
+    {
+        try
+        {
+            if (_message != null)
+            {
+                var result = await Client.PostAsJsonAsync("api/contact", _message);
+
+                if (result.IsSuccessStatusCode)
+                {
+                    _message = new();
+                }
+            }
+        }
+        catch (Exception)
+        {
+            // TODO: Toast
+        }
+    }
+
+}
