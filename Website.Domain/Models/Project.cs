@@ -8,22 +8,21 @@ namespace Website.Domain.Models
 {
     using Core.Abstractions.Models;
 
-    // TODO: Make immutable
     public class Project : Entity<int>
     {
-        public string Description { get; set; } = string.Empty;
+        public required string Description { get; init; }
 
-        public int Forks { get; set; } = 0;
+        public required int Forks { get; init; }
 
-        public bool IsForked { get; set; } = false;
+        public required bool IsForked { get; init; }
 
-        public string Link { get; set; } = string.Empty;
+        public required string Link { get; init; }
 
-        public string Name { get; set; } = string.Empty;
+        public required string Name { get; init; }
 
-        public int Stars { get; set; } = 0;
+        public required int Stars { get; init; }
 
-        public int Watchers { get; set; } = 0;
+        public required int Watchers { get; init; }
 
         public override bool Equals(object? obj)
         {
@@ -32,7 +31,8 @@ namespace Website.Domain.Models
                 return false;
             }
 
-            return Name == other.Name &&
+            return Id == other.Id &&
+                Name == other.Name &&
                 Description == other.Description &&
                 Forks == other.Forks &&
                 IsForked == other.IsForked &&
@@ -43,7 +43,7 @@ namespace Website.Domain.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Name, Description, Forks, IsForked, Link, Stars, Watchers);
+            return HashCode.Combine(Id, Name, Description, Forks, IsForked, Link, Stars, Watchers);
         }
     }
 }
