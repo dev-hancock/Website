@@ -32,42 +32,66 @@
                 </div>
             </div>
 
-            <EditForm Model="@_message" OnValidSubmit="@Submit" FormName="Contact">
-                <DataAnnotationsValidator/>
-                <ValidationSummary/>
-
-                <div class="space-y-6">
-                    <!-- Name and Email -->
-                    <div>
-                        <label class="mb-1 block text-sm font-medium" for="email">Email</label>
-                        <InputText type="email" id="email" @bind-Value="_message!.Email"
-                                   class="bg-black/20 w-full border border-transparent p-2 text-white focus:border-[var(--accent-from)] focus:outline-none"
-                                   placeholder="Enter your email"/>
+            @if (Success.HasValue)
+            {
+                if (Success.Value)
+                {
+                    <div class="mb-4 flex flex-col items-center justify-center rounded-lg p-4 text-white shadow-md">
+                        <div class="bg-white/20 mb-4 flex h-14 w-14 flex-none items-center justify-center rounded-full">
+                            <i class="fa-solid fa-check text-2xl text-white"></i>
+                        </div>
+                        <span>I'll be in touch soon!</span>
                     </div>
-
-                    <!-- Subject -->
-                    <div>
-                        <label class="mb-1 block text-sm font-medium" for="subject">Subject</label>
-                        <InputText id="subject" @bind-Value="_message!.Subject"
-                                   class="bg-black/20 w-full border border-transparent p-2 text-white focus:border-[var(--accent-from)] focus:outline-none"
-                                   placeholder="Enter the subject"/>
+                }
+                else
+                {
+                    <div class="mb-4 flex flex-col items-center justify-center rounded-lg p-4 text-white shadow-md">
+                        <div class="bg-white/20 mb-4 flex h-14 w-14 flex-none items-center justify-center rounded-full">
+                            <i class="fa-solid fa-exclamation text-2xl text-white"></i>
+                        </div>
+                        <span>That's embarrassing, something went wrong!</span>
                     </div>
+                }
+            }
+            else
+            {
+                <EditForm Model="@_message" OnValidSubmit="@Submit" FormName="Contact">
+                    <DataAnnotationsValidator/>
+                    <ValidationSummary/>
 
-                    <!-- Message -->
-                    <div>
-                        <label class="mb-1 block text-sm font-medium" for="message">Message</label>
-                        <InputTextArea id="message" @bind-Value="_message!.Body" rows="5"
-                                       class="bg-black/20 min-h-[150px] w-full resize-y border border-transparent p-2 text-white focus:border-[var(--accent-from)] focus:outline-none"
-                                       placeholder="Enter your message">
-                        </InputTextArea>
+                    <div class="space-y-6">
+                        <!-- Name and Email -->
+                        <div>
+                            <label class="mb-1 block text-sm font-medium" for="email">Email</label>
+                            <InputText type="email" id="email" @bind-Value="_message!.Email"
+                                       class="bg-black/20 w-full border border-transparent p-2 text-white focus:border-[var(--accent-from)] focus:outline-none"
+                                       placeholder="Enter your email"/>
+                        </div>
+
+                        <!-- Subject -->
+                        <div>
+                            <label class="mb-1 block text-sm font-medium" for="subject">Subject</label>
+                            <InputText id="subject" @bind-Value="_message!.Subject"
+                                       class="bg-black/20 w-full border border-transparent p-2 text-white focus:border-[var(--accent-from)] focus:outline-none"
+                                       placeholder="Enter the subject"/>
+                        </div>
+
+                        <!-- Message -->
+                        <div>
+                            <label class="mb-1 block text-sm font-medium" for="message">Message</label>
+                            <InputTextArea id="message" @bind-Value="_message!.Body" rows="5"
+                                           class="bg-black/20 min-h-[150px] w-full resize-y border border-transparent p-2 text-white focus:border-[var(--accent-from)] focus:outline-none"
+                                           placeholder="Enter your message">
+                            </InputTextArea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="bg-[var(--accent-from)] text-[var(--bg-color)] px-6 py-2 font-semibold hover:bg-opacity-90 focus:outline-none">
+                            Submit
+                        </button>
                     </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" class="bg-[var(--accent-from)] text-[var(--bg-color)] px-6 py-2 font-semibold hover:bg-opacity-90 focus:outline-none">
-                        Submit
-                    </button>
-                </div>
-            </EditForm>
+                </EditForm>
+            }
         </div>
     </div>
 </section>
@@ -78,26 +102,29 @@
     [Inject]
     HttpClient Client { get; set; } = default!;
 
-    MessageDto? _message = new();
+    MessageDto _message = new();
+
+    bool? Success = null;
 
     async Task Submit()
     {
         try
         {
-            if (_message != null)
-            {
-                var result = await Client.PostAsJsonAsync("api/contact", _message);
+            var result = await Client.PostAsJsonAsync("api/contact", _message);
 
-                if (result.IsSuccessStatusCode)
-                {
-                    _message = new();
-                }
+            Success = result.IsSuccessStatusCode;
+
+            if (Success.Value)
+            {
+                _message = new();
             }
         }
         catch (Exception)
         {
-            // TODO: Toast
+            Success = false;
         }
+
+        await InvokeAsync(StateHasChanged);
     }
 
 }

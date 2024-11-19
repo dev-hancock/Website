@@ -7,6 +7,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Email\MailGun\**" />
+	  <EmbeddedResource Remove="Email\MailGun\**" />
+	  <None Remove="Email\MailGun\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="FluentValidation" Version="11.11.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />

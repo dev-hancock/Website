@@ -4,7 +4,7 @@
 //  </copyright>
 // -----------------------------------------------------------------------
 
-namespace Website.Infrastructure.Email.MailGun
+namespace Website.Infrastructure.Email
 {
     using Application.Interfaces;
 
@@ -13,7 +13,7 @@ namespace Website.Infrastructure.Email.MailGun
         /// <inheritdoc />
         public Task SendAsync(string from, string to, string subject, string body, CancellationToken token = default)
         {
-            return Task.CompletedTask;
+            throw new NotImplementedException("Email is not configured.");
         }
     }
 }
