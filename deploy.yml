@@ -50,11 +50,11 @@ stages:
             inputs:
               command: 'publish'
               arguments: '--configuration $(configuration) --output $(Build.ArtifactStagingDirectory)/publish'
-              projects: '**/*.csproj'
+              projects: '**/website.server.csproj'
               publishWebProjects: true
 
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish'
+            displayName: 'Artifact'
             inputs:
               pathToPublish: '$(Build.ArtifactStagingDirectory)/publish'
               artifactName: 'drop'
