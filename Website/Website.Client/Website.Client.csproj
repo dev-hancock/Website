@@ -24,7 +24,7 @@
 	</ItemGroup>
 
 	<Target Name="Tailwind" BeforeTargets="Build">
-		<Exec Command="npm run build:css" />
+		<Exec Command="npm run build:css" WorkingDirectory="$(ProjectDir)" />
 	</Target>
 
 </Project>
