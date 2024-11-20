@@ -4,7 +4,7 @@ pool: 'Default'
 
 variables:
   configuration: 'Release'
-  dotnet_version: '8.x'
+  dotnet_version: '9.x'
 
 stages:
   - stage: Build
@@ -41,8 +41,8 @@ stages:
         steps:
           - template: decrypt-file.yml
             parameters:
-              input_file: './website/appsettings.secrets.json.enc'
-              output_file: './website/appsettings.secrets.json'
+              input_file: './website/website.server/appsettings.secrets.json.enc'
+              output_file: './website/website.server/appsettings.secrets.json'
               key: $(ENCRYPTION_KEY)
 
           - task: DotNetCoreCLI@2
@@ -50,11 +50,11 @@ stages:
             inputs:
               command: 'publish'
               arguments: '--configuration $(configuration) --output $(Build.ArtifactStagingDirectory)/publish'
-              projects: '**/*.csproj'
+              projects: '**/website.server.csproj'
               publishWebProjects: true
 
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish'
+            displayName: 'Artifact'
             inputs:
               pathToPublish: '$(Build.ArtifactStagingDirectory)/publish'
               artifactName: 'drop'
