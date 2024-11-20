@@ -35,7 +35,7 @@ namespace Website.Infrastructure.Services
             {
                 try
                 {
-                    var projects = await _service.GetProjects("ahancock1", token);
+                    var projects = await _service.GetProjects("dev-hancock", token);
 
                     _projects.Sync(projects);
 
