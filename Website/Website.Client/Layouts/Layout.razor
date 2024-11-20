@@ -1,0 +1,11 @@
+﻿@inherits LayoutComponentBase
+
+<div class="flex min-h-screen flex-col lg:flex-row">
+    <Nav></Nav>
+    <div class="flex min-h-screen flex-col lg:w-[calc(100%-var(--nav-width))] lg:ml-[var(--nav-width)]">
+        <main class="flex-grow">
+            @Body
+        </main>
+        <Footer></Footer>
+    </div>
+</div>
