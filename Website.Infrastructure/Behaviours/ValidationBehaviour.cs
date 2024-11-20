@@ -23,7 +23,7 @@ namespace Website.Infrastructure.Behaviours
 
                 var result = await validator.ValidateAsync(context, token);
 
-                if (!result?.IsValid ?? false)
+                if (!result.IsValid)
                 {
                     throw new ValidationException(result.Errors);
                 }
