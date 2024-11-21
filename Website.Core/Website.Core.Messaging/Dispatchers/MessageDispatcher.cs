@@ -25,7 +25,7 @@ namespace Website.Core.Messaging.Dispatchers
 
             if (handler != null)
             {
-                if (GetHandleMethod(handler, message)?.Invoke(handler, [message]) is Task<T> task)
+                if (GetHandleMethod(handler, message)?.Invoke(handler, [message, token]) is Task<T> task)
                 {
                     return await task;
                 }
